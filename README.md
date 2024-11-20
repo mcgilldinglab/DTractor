@@ -2,7 +2,7 @@
 A model for cell type deconvolution of spatial transcriptomics with deep neural network, transfer learning and matrix factorization.
 
 ## Table of Contents
-- [Overview](#application-scenarios)
+- [Overview](#overview)
 - [Installation](#installation)
 - [Tutorials](#tutorials)
 - [Credits](#credits)
