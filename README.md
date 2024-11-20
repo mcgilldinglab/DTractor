@@ -10,5 +10,9 @@ To gain comprehensive insights into cell functions and intricate interactions, i
 ## Tutorials
 
 ## Credits
+DTractor is jointly developed by [Jin Kweon](https://github.com/yjkweon24), Chenyu Liu, [Gregory Fonseca](https://www.mcgill.ca/expmed/dr-gregory-fonseca-0), and [Jun Ding](https://github.com/phoenixding) from McGill University.
 
 ## Contacts
+Please don't hesitate to contact us if you have any questions and we will be happy to help:
+* jin.kweon at mail.mcgill.ca 
+* jun.ding at mcgill.ca
