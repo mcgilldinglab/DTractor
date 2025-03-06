@@ -7,6 +7,34 @@ To gain comprehensive insights into cell functions and intricate interactions, i
 
 ## Installation
 
+```bash
+# Create a conda environment
+conda create -n dtractor python=3.9
+conda activate dtractor
+
+# Install the package directly from GitHub
+pip install git+https://github.com/mcgilldinglab/DTractor.git
+```
+
+Or for development:
+
+```bash
+# Clone the repository
+git clone https://github.com/mcgilldinglab/DTractor.git
+cd DTractor
+
+# Create a conda environment
+conda create -n dtractor python=3.9
+conda activate dtractor
+
+# Install in development mode
+pip install -e .
+```
+
+## Usage
+
+Import the package and use the functions as shown in the example notebooks. 
+
 ## Tutorials
 
 ## Credits
