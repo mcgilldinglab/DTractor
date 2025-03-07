@@ -7,6 +7,7 @@ A model for cell type deconvolution of spatial transcriptomics with deep neural 
 - [Usage](#Usage)
 - [Tutorials](#Tutorials)
 - [Credits](#Credits)
+- [Credits](#Contacts)
 
 ## Overview 
 <img title="DTractor Overview" alt="Alt text" src="/figures/main.png">
@@ -41,6 +42,7 @@ pip install -e .
 ## Usage
 
 Import the package and use the functions as shown in the example notebooks. 
+Data can be downloaded from [Google Drive](https://drive.google.com/file/d/1REJuo0juOS85F6VNS7rw4nt8BttZ3Xm0/view?usp=sharing)
 
 ## Tutorials
 ### Running DTractor on pdac dataset and visualization of results
@@ -48,7 +50,7 @@ Import the package and use the functions as shown in the example notebooks.
 
 
 ## Credits
-DTractor is jointly developed by [Jin Kweon](https://github.com/yjkweon24), Chenyu Liu, [Gregory Fonseca](https://www.mcgill.ca/expmed/dr-gregory-fonseca-0), and [Jun Ding](https://github.com/phoenixding) from McGill University.
+DTractor is jointly developed by [Jin Kweon](https://github.com/yjkweon24), [Chenyu Liu](https://github.com/theguardsgod), [Gregory Fonseca](https://www.mcgill.ca/expmed/dr-gregory-fonseca-0), and [Jun Ding](https://github.com/phoenixding) from McGill University.
 
 ## Contacts
 Please don't hesitate to contact us if you have any questions and we will be happy to help:
