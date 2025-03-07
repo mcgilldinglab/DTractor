@@ -1,1 +1,1 @@
-from .DTractor import *
+from .DTractor_pipeline import *
