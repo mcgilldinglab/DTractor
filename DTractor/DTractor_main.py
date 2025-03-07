@@ -364,26 +364,30 @@ class DTractor_pipeline:
         print("  - Single-cell/nucleus reference data: Must have cell type annotations in .obs['celltype']")
         print("="*80)
 
+        # Initialize adata attributes to None
+        self.adata_vis = None
+        self.adata_ref = None
+
     def data_import(self, spatial_data_path, reference_data_path):
         self.spatial_data_path = spatial_data_path
         self.reference_data_path = reference_data_path
         
         # Read and validate the dataset
         # adata_vis = validate_spatial_data(sc.read_h5ad("spatial_example.h5ad"))
-        adata_vis = validate_spatial_data(sc.read_h5ad(self.spatial_data_path))
+        self.adata_vis = validate_spatial_data(sc.read_h5ad(self.spatial_data_path))
+        
         # Read and validate the dataset
         # adata_ref = validate_reference_data(sc.read_h5ad("reference_example.h5ad"))
-        adata_ref = validate_reference_data(sc.read_h5ad(self.reference_data_path))
+        self.adata_ref = validate_reference_data(sc.read_h5ad(self.reference_data_path))
 
 
         # Find common genes between reference and visium datasets
-        common_genes = np.intersect1d(adata_ref.var.index, adata_vis.var.index)
-        print(f"Found {common_genes.shape[0]} common genes between reference and visium datasets")
+        common_genes = np.intersect1d(self.adata_ref.var.index, self.adata_vis.var.index)
+        print(f"\n\nFound {common_genes.shape[0]} common genes between reference and visium datasets")
         print("These common genes will be used for downstream analysis")
-        return adata_vis, adata_ref
         
     def run(self):
-        adata_ref_copy, adata_vis_copy = run_scvi_analysis(adata_ref, adata_vis)
+        adata_ref_copy, adata_vis_copy = run_scvi_analysis(self.adata_ref, self.adata_vis)
         
         # Clear GPU memory
         torch.cuda.empty_cache()
