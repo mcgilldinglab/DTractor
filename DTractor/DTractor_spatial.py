@@ -5,7 +5,12 @@ import scvi
 import matplotlib.pyplot as plt
 from scipy.spatial.distance import pdist, squareform
 from sklearn.neighbors import NearestNeighbors   
-from .DTractor_main import *
+from sklearn import preprocessing
+import torch.optim as optim
+import torch.nn.functional as F
+import statsmodels.api as sm
+import scanpy as sc
+# from .DTractor_main import *
 seed=42
 
 # Setting a fixed seed ensures reproducibility of results
