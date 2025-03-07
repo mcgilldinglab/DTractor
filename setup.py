@@ -17,7 +17,7 @@ setup(
         "scanpy",
         "scikit_learn==1.0.2",
         "scipy==1.9.0",
-        "scvi-tools == 0.6.8",
+        "scvi-tools",
         "seaborn==0.11.2",
         "statsmodels==0.13.2",
         "torch==1.13.0+cu117",
