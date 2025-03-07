@@ -4,6 +4,7 @@ import torch
 import random
 import matplotlib.pyplot as plt
 import warnings
+warnings.filterwarnings('ignore')
 
 def set_seed(seed):
     random.seed(seed)
@@ -95,9 +96,6 @@ def train_scvi_model(adata, max_epochs=50, batch_size=128, device=None, seed=42,
     scvi.model.SCVI
         Trained scVI model
     """
-    warnings.filterwarnings('ignore', 
-                           message='The value argument must be within the support of the distribution',
-                           module='scvi.distributions.negative_binomial')
     set_seed(seed)
     
     gpu_available = torch.cuda.is_available()
