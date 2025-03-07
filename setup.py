@@ -19,8 +19,7 @@ setup(
         "scipy==1.9.0",
         "scvi-tools == 0.20.2",
         "seaborn==0.11.2",
-        "statsmodels==0.13.2",
-        "torch==1.13.0+cu117",
+        "statsmodels==0.13.2"
     ],
 )
 
