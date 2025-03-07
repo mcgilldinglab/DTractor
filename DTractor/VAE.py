@@ -1,6 +1,18 @@
 import numpy as np
 import scvi
 
+def set_seed(seed):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    scvi.settings.seed = seed 
+    
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
+
 def prepare_data(adata_ref, adata_vis):
     """
     Prepare reference and visium data by finding common genes and handling negative values.
