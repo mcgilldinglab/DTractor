@@ -56,9 +56,13 @@ class DTractor_pipeline:
         # Initialize adata attributes to None
         self.adata_vis = None
         self.adata_ref = None
+        
         self.adata_vis_copy = None  # Store processed data
         self.adata_ref_copy = None  # Store processed data
-
+        
+        self.spot_celltype = None
+        self.st_approx_adam_torch = None
+        
     def data_import(self, spatial_data_path, reference_data_path):
         self.spatial_data_path = spatial_data_path
         self.reference_data_path = reference_data_path
@@ -107,7 +111,7 @@ class DTractor_pipeline:
         st, st_emb, spot_celltype, celltype_gene_matrix_torch = setup_deconvolution(self.adata_vis_copy, self.adata_ref_copy)
 
         # Print instructions for adam_st_torch parameters
-        print("adam_st_torch function parameters:")
+        print("\n\nadam_st_torch function parameters:")
         print("  regularization_option: 1 = Fastest (just Frobenius norm, no regularization)")
         print("                         2 = Simple regularization with argsort (faster)")
         print("                         3 = Sophisticated regularization with softmax (slower but potentially better)")
@@ -116,10 +120,10 @@ class DTractor_pipeline:
         print("                         3 = Use user-defined iterations")
         print("  user_defined_iterations: Number of iterations if iteration_option is 3")
         print("  similarity_weight:     Weight for similarity loss (should be 0 for regularization_option=1)")
-        print("  celltype_distance_weight: Weight for celltype distance loss (should be 0 for regularization_option=1)")
+        print("  celltype_distance_weight: Weight for celltype distance loss (should be 0 for regularization_option=1)\n\n")
 
         # Run the deconvolution function
-        spot_celltype, st_approx_adam_torch = run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
+        self.spot_celltype, self.st_approx_adam_torch = run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
                                                             regularization_option=1,
                                                             iteration_option=3,
                                                             user_defined_iterations=60000,
@@ -128,8 +132,14 @@ class DTractor_pipeline:
         
     def plotting(self):
         # Run the visualization functions
-        plot_spatial_celltype_predictions(spot_celltype, self.adata_vis_copy, st_approx_adam_torch, self.adata_ref_copy)
-        plot_pc1_spatial(spot_celltype, st_approx_adam_torch) 
-        plot_celltype_correlation(st_approx_adam_torch, self.adata_ref_copy)
+        if self.spot_celltype is None or self.st_approx_adam_torch is None:
+            print("Error: Run the deconvolution first before plotting.")
+            return
+            
+        # Run the visualization functions
+        plot_spatial_celltype_predictions(self.spot_celltype, self.adata_vis_copy, self.st_approx_adam_torch, self.adata_ref_copy)
+        plot_pc1_spatial(self.spot_celltype, self.st_approx_adam_torch)
+        plot_celltype_correlation(self.st_approx_adam_torch, self.adata_ref_copy)
+
 
     
