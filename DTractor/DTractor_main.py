@@ -381,8 +381,8 @@ class DTractor_pipeline:
 
         # Run the deconvolution function
         spot_celltype, st_approx_adam_torch = run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
-                                                            regularization_option=2,
-                                                            iteration_option=2,
+                                                            regularization_option=1,
+                                                            iteration_option=3,
                                                             user_defined_iterations=320000,
                                                             similarity_weight=0.1,
                                                             celltype_distance_weight=0.1)
