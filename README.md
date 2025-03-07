@@ -46,7 +46,7 @@ Data can be downloaded from [Google Drive](https://drive.google.com/file/d/1REJu
 
 ## Tutorials
 ### Running DTractor on pdac dataset and visualization of results
-[pdac_run.ipynb](example/[pdac_run.ipynb)
+[pdac_run.ipynb](example/pdac_run.ipynb)
 
 
 ## Credits
