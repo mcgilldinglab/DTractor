@@ -13,7 +13,6 @@ import seaborn as sns
 import math
 from sklearn.decomposition import PCA
 from sklearn import preprocessing
-seed = 42
 from .DTractor_spatial import *
 from .data_import import *
 from .VAE import *
