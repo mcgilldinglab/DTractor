@@ -23,7 +23,7 @@ Second, create a new conda environment and activate it:
 git clone https://github.com/mcgilldinglab/DTractor.git
 cd DTractor
 
-# Create a conda environment
+# Create and activate a conda environment
 conda create -n dtractor python=3.9
 conda activate dtractor
 ````
