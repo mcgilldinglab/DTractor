@@ -4,18 +4,19 @@ import numpy as np
 import torch
 import random
 import scvi
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import statsmodels.api as sm
 import torch.optim as optim
 import torch.nn.functional as F
 import plotly.express as px
-import seaborn as sns
+# import seaborn as sns
 import math
-from sklearn.decomposition import PCA
+# from sklearn.decomposition import PCA
 from sklearn import preprocessing
 from .DTractor_spatial import *
 from .data_import import *
 from .VAE import *
+from .plot_helper import *
 
 class DTractor_pipeline:
     def __init__(self):
