@@ -2,6 +2,7 @@ import numpy as np
 import torch
 import random
 import scvi
+seed=42
 
 # Setting a fixed seed ensures reproducibility of results
 # This is important for scientific work and debugging
