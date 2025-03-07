@@ -1,4 +1,8 @@
-seed = 42
+import numpy as np
+import torch
+import random
+import scvi
+
 # Setting a fixed seed ensures reproducibility of results
 # This is important for scientific work and debugging
 def set_seed(seed):
