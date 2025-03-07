@@ -3,6 +3,7 @@ import torch
 import random
 import scvi
 from scipy.spatial.distance import pdist, squareform
+from sklearn.neighbors import NearestNeighbors   
 seed=42
 
 # Setting a fixed seed ensures reproducibility of results
