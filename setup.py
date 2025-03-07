@@ -14,7 +14,7 @@ setup(
         "numpy==1.23.5",
         "pandas==1.4.2",
         "plotly==5.6.0",
-        "scanpy==1.11.0",
+        "scanpy",
         "scikit_learn==1.0.2",
         "scipy==1.9.0",
         "scvi-tools == 0.6.8",
