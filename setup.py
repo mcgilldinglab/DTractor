@@ -21,7 +21,8 @@ setup(
         "seaborn==0.11.2",
         "statsmodels==0.13.2",
         "torch==1.13.0",
-        "jax==0.4.14"
+        "jax==0.4.14",
+        "jaxlib==0.4.14"
     ],
 )
 
