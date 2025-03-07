@@ -53,7 +53,7 @@ def prepare_data(adata_ref, adata_vis):
         print(f"Min value in data: {min_value}")
         print(f"Max value in data: {max_value}")
         print(f"Number of negative values: {negative_count}")
-        print(f"Percentage of negative values: {negative_percentage:.4f}%")
+        print(f"Percentage of negative values: {negative_percentage:.4f}%\n\n")
 
         if negative_count > 0:
             print("\n⚠️ WARNING: Negative values detected in the expression matrix.")
