@@ -7,7 +7,7 @@ A model for cell type deconvolution of spatial transcriptomics with deep neural 
 - [Usage](#Usage)
 - [Tutorials](#Tutorials)
 - [Credits](#Credits)
-- [Credits](#Contacts)
+- [Contacts](#Contacts)
 
 ## Overview 
 <img title="DTractor Overview" alt="Alt text" src="/figures/main.png">
