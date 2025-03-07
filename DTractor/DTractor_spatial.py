@@ -1,3 +1,18 @@
+# Setting a fixed seed ensures reproducibility of results
+# This is important for scientific work and debugging
+def set_seed(seed):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    scvi.settings.seed = seed 
+    
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
+        
+
 def plot_accuracy(train_loss):
     """
     Plot the training loss curve.
