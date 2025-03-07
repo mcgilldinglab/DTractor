@@ -2,6 +2,7 @@ import numpy as np
 import torch
 import random
 import scvi
+import matplotlib.pyplot as plt
 from scipy.spatial.distance import pdist, squareform
 from sklearn.neighbors import NearestNeighbors   
 from .DTractor_main import *
