@@ -5,8 +5,6 @@ import torch
 import random
 import scvi
 import matplotlib.pyplot as plt
-from scipy.spatial.distance import pdist, squareform
-from sklearn.neighbors import NearestNeighbors   
 import statsmodels.api as sm
 import torch.optim as optim
 import torch.nn.functional as F
