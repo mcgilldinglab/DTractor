@@ -338,7 +338,7 @@ def adam_st_torch(st, st_emb, spot_celltype, celltype_gene,
                 user_defined_iterations=None, 
                 similarity_weight=0.0, 
                 celltype_distance_weight=0.0, 
-                seed):
+                seed=42):
     """
     Perform deconvolution using Adam optimizer with customizable optimization options.
     
@@ -509,7 +509,7 @@ def setup_deconvolution(adata_vis_copy, adata_ref_copy):
 def run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch, 
                     regularization_option=1, iteration_option=3, 
                     user_defined_iterations=250000, similarity_weight=0.1, 
-                    celltype_distance_weight=0.1, seed):
+                    celltype_distance_weight=0.1, seed=42):
     """
     Run deconvolution using adam_st_torch and process results.
     
@@ -546,7 +546,7 @@ def run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
                                                     user_defined_iterations=user_defined_iterations,
                                                     similarity_weight=similarity_weight,
                                                     celltype_distance_weight=celltype_distance_weight,
-                                                    seed)
+                                                    seed=seed)
     st_approx_adam_torch = st_approx_adam_torch.detach().cpu().numpy()
 
     torch.cuda.empty_cache()
