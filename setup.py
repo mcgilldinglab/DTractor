@@ -14,15 +14,14 @@ setup(
         "numpy==1.23.5",
         "pandas==1.4.2",
         "plotly==5.6.0",
-        "scanpy",
+        "scanpy==1.9.5",
         "scikit_learn==1.0.2",
         "scipy==1.9.0",
-        "scvi-tools",
+        "scvi-tools == 0.20.2",
         "seaborn==0.11.2",
         "statsmodels==0.13.2",
         "torch==1.13.0",
         
     ],
 )
-
 
