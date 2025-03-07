@@ -10,7 +10,6 @@ import torch.optim as optim
 import torch.nn.functional as F
 import statsmodels.api as sm
 import scanpy as sc
-# from .DTractor_main import *
 seed=42
 
 # Setting a fixed seed ensures reproducibility of results
