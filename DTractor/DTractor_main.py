@@ -124,7 +124,8 @@ class DTractor_pipeline:
                                                             user_defined_iterations=320000,
                                                             similarity_weight=0.1,
                                                             celltype_distance_weight=0.1)
-
+        
+    def plotting(self):
         # Run the visualization functions
         plot_spatial_celltype_predictions(spot_celltype, self.adata_vis_copy, st_approx_adam_torch, self.adata_ref_copy)
         plot_pc1_spatial(spot_celltype, st_approx_adam_torch) 
