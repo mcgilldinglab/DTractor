@@ -10,7 +10,6 @@ import torch.optim as optim
 import torch.nn.functional as F
 import statsmodels.api as sm
 import scanpy as sc
-seed=42
 
 # Setting a fixed seed ensures reproducibility of results
 # This is important for scientific work and debugging
@@ -177,8 +176,6 @@ def compute_r2(st_approx_adam_torch):
     print("McFadden's R-squared redeconve annotation:", round(mine_entire_redeannot_mcfadden_r2, 4))
     return mine_entire_redeannot_mcfadden_r2
 
-set_seed(seed)
-
 def softmax_rank(x):
     """
     Calculate soft ranks using softmax transformation.
@@ -340,7 +337,8 @@ def adam_st_torch(st, st_emb, spot_celltype, celltype_gene,
                 iteration_option=3, 
                 user_defined_iterations=None, 
                 similarity_weight=0.0, 
-                celltype_distance_weight=0.0):
+                celltype_distance_weight=0.0, 
+                seed):
     """
     Perform deconvolution using Adam optimizer with customizable optimization options.
     
@@ -373,9 +371,11 @@ def adam_st_torch(st, st_emb, spot_celltype, celltype_gene,
     --------
     tuple: (st_approx_adam_torch, best_iteration)
     """
+    set_seed(seed)
+                    
     # Check if CUDA is available
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
+    
     # Create optimization options from parameters
     opt_options = set_optimization_options(
         regularization_option=regularization_option,
@@ -509,7 +509,7 @@ def setup_deconvolution(adata_vis_copy, adata_ref_copy):
 def run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch, 
                     regularization_option=1, iteration_option=3, 
                     user_defined_iterations=250000, similarity_weight=0.1, 
-                    celltype_distance_weight=0.1):
+                    celltype_distance_weight=0.1, seed):
     """
     Run deconvolution using adam_st_torch and process results.
     
@@ -545,7 +545,8 @@ def run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
                                                     iteration_option=iteration_option,
                                                     user_defined_iterations=user_defined_iterations,
                                                     similarity_weight=similarity_weight,
-                                                    celltype_distance_weight=celltype_distance_weight)
+                                                    celltype_distance_weight=celltype_distance_weight,
+                                                    seed)
     st_approx_adam_torch = st_approx_adam_torch.detach().cpu().numpy()
 
     torch.cuda.empty_cache()
