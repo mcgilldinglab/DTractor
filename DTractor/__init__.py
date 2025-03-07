@@ -1,1 +1,1 @@
-from .DTractor_pipeline import DTractor_pipeline
+from . import DTractor_pipeline
