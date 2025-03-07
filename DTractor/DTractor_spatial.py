@@ -4,6 +4,7 @@ import random
 import scvi
 from scipy.spatial.distance import pdist, squareform
 from sklearn.neighbors import NearestNeighbors   
+from .DTractor_main import *
 seed=42
 
 # Setting a fixed seed ensures reproducibility of results
