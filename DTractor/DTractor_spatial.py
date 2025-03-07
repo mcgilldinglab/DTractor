@@ -329,7 +329,7 @@ def custom_loss(A, B, C, D, iteration, similarity_weight, celltype_distance_weig
     loss = (similarity_weight * similarity_loss) + (celltype_distance_weight * celltype_distance_loss) + fro_loss
     return loss, BC, celltype_distance_weight * celltype_distance_loss, similarity_weight * similarity_loss, fro_loss
 
-
+train_loss_st_torch = []
 def adam_st_torch(st, st_emb, spot_celltype, celltype_gene, 
                 regularization_option=1, 
                 iteration_option=3, 
