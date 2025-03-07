@@ -15,7 +15,7 @@ import seaborn as sns
 import math
 from sklearn.decomposition import PCA
 from sklearn import preprocessing
-from Dtractor_spatial import *
+from .Dtractor_spatial import *
 seed = 42
 
 # Setting a fixed seed ensures reproducibility of results
