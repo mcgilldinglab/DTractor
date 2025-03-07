@@ -2,6 +2,7 @@ import numpy as np
 import torch
 import random
 import scvi
+from scipy.spatial.distance import pdist, squareform
 seed=42
 
 # Setting a fixed seed ensures reproducibility of results
