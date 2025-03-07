@@ -367,10 +367,7 @@ class DTractor_pipeline:
         print("  - Single-cell/nucleus reference data: Must have cell type annotations in .obs['celltype']")
         print("="*80)
 
-        
-    def run(self):
-       
- 
+    def data_import(self):
         # Read and validate the dataset
         # adata_vis = validate_spatial_data(sc.read_h5ad("spatial_example.h5ad"))
         adata_vis = validate_spatial_data(sc.read_h5ad(self.spatial_data_path))
@@ -383,7 +380,8 @@ class DTractor_pipeline:
         common_genes = np.intersect1d(adata_ref.var.index, adata_vis.var.index)
         print(f"Found {common_genes.shape[0]} common genes between reference and visium datasets")
         print("These common genes will be used for downstream analysis")
-
+        
+    def run(self):
         adata_ref_copy, adata_vis_copy = run_scvi_analysis(adata_ref, adata_vis)
         
         # Clear GPU memory
