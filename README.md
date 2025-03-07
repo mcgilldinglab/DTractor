@@ -44,6 +44,18 @@ pip install -e .
 Import the package and use the functions as shown in the example notebooks. 
 Data can be downloaded from [Google Drive](https://drive.google.com/file/d/1REJuo0juOS85F6VNS7rw4nt8BttZ3Xm0/view?usp=sharing)
 
+Use the all in one `DTractor_pipeline`. Please read our [Examples](example/pdac_run.ipynb) for details. 
+```python
+from DTractor import DTractor_pipeline
+
+# Define Reference single-cell dataset
+adata_ref = "adata_ref_13402.h5ad"
+adata_vis = "adata_vis_13402.h5ad"
+
+dtractor = DTractor_pipeline(adata_vis, adata_ref) #set up parameters
+dtractor.run() #train model and visualize
+```
+
 ## Tutorials
 ### Running DTractor on pdac dataset and visualization of results
 [pdac_run.ipynb](example/pdac_run.ipynb)
