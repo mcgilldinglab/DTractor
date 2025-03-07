@@ -289,7 +289,7 @@ class DTractor_pipeline:
         print(f"\n\nFound {common_genes.shape[0]} common genes between reference and visium datasets")
         print("These common genes will be used for downstream analysis")
 
-    def vae(self):
+    def vae_train(self):
         self.adata_ref_copy, self.adata_vis_copy = run_scvi_analysis(self.adata_ref, self.adata_vis)
         
     def run(self):
