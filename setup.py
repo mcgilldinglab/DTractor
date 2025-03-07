@@ -20,7 +20,7 @@ setup(
         "scvi-tools",
         "seaborn==0.11.2",
         "statsmodels==0.13.2",
-        "torch==1.13.0+cu117",
+        "torch==1.13.0",
         
     ],
 )
