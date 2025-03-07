@@ -1,1 +1,2 @@
-from .DTractor_pipeline import DTractor_pipeline
+from .DTractor_pipeline import *
+from .DTractor_spatial import *
