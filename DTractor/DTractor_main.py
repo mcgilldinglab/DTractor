@@ -81,22 +81,8 @@ class DTractor_pipeline:
             print("Training VAE without a fixed seed, 42.")
             
         self.adata_ref_copy, self.adata_vis_copy = run_scvi_analysis(self.adata_ref, self.adata_vis, seed)
-        
-    def run(self):
-        # Clear GPU memory
-        torch.cuda.empty_cache()
-        # Calculate cell type embeddings
-        celltype_emb_mean, distance_sc, celltype_gene_matrix_torch = calculate_celltype_embeddings(self.adata_ref_copy)
 
-        # Find spatial neighbors
-        neighbors = find_spatial_neighbors(self.adata_vis_copy, k=5)
-
-        # Estimate iterations
-        est_iter, start_range, end_range = estimate_iterations(self.adata_vis_copy, self.adata_ref_copy)  
-
-        # Set up tensors for deconvolution
-        st, st_emb, spot_celltype, celltype_gene_matrix_torch = setup_deconvolution(self.adata_vis_copy, self.adata_ref_copy)
-
+    def print_instructions(self):
         # Print instructions for adam_st_torch parameters
         print("\n\nadam_st_torch function parameters:")
         print("  regularization_option: 1 = Fastest (just Frobenius norm, no regularization)")
@@ -108,14 +94,33 @@ class DTractor_pipeline:
         print("  user_defined_iterations: Number of iterations if iteration_option is 3")
         print("  similarity_weight:     Weight for similarity loss (should be 0 for regularization_option=1)")
         print("  celltype_distance_weight: Weight for celltype distance loss (should be 0 for regularization_option=1)\n\n")
+        
+    def run(self, seed=42, k=5, regularization_option=1, iteration_option=3, user_defined_iterations=10000, similarity_weight=0.1, celltype_distance_weight=0.1):
+        # Clear GPU memory
+        torch.cuda.empty_cache()
+        # Calculate cell type embeddings
+        celltype_emb_mean, distance_sc, celltype_gene_matrix_torch = calculate_celltype_embeddings(self.adata_ref_copy)
+
+        # Find spatial neighbors
+        
+        neighbors = find_spatial_neighbors(self.adata_vis_copy, k=k)
+         # Print message if regularization_option is not 1
+        if regularization_option != 1:
+            print(f"spatial regularization 2 neighbors assumption = {k}")
+            
+        # Estimate iterations
+        est_iter, start_range, end_range = estimate_iterations(self.adata_vis_copy, self.adata_ref_copy)  
+
+        # Set up tensors for deconvolution
+        st, st_emb, spot_celltype, celltype_gene_matrix_torch = setup_deconvolution(self.adata_vis_copy, self.adata_ref_copy)
 
         # Run the deconvolution function
         self.spot_celltype, self.st_approx_adam_torch = run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
-                                                            regularization_option=1,
-                                                            iteration_option=3,
-                                                            user_defined_iterations=10000,
-                                                            similarity_weight=0.1,
-                                                            celltype_distance_weight=0.1)
+                                                            regularization_option=regularization_option,
+                                                            iteration_option=iteration_option,
+                                                            user_defined_iterations=user_defined_iterations,
+                                                            similarity_weight=similarity_weight,
+                                                            celltype_distance_weight=celltype_distance_weight, seed=seed)
         
     def plotting(self):
         # Run the visualization functions
