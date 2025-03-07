@@ -1,5 +1,7 @@
 import numpy as np
 import scvi
+import torch
+import random
 
 def set_seed(seed):
     random.seed(seed)
