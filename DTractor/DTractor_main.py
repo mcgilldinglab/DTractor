@@ -332,6 +332,40 @@ class DTractor_pipeline:
     def __init__(self,spatial_data_path,reference_data_path):
         self.spatial_data_path = spatial_data_path
         self.reference_data_path = reference_data_path
+
+        # Note to users about preprocessing requirements
+        print("\n" + "="*80)
+        print("IMPORTANT PREPROCESSING REQUIREMENTS:")
+        print("="*80)
+        print("Before using this notebook, please ensure both datasets are properly preprocessed:")
+        print("")
+        print("For spatial transcriptomics data:")
+        print("  - Filter low-quality spots (low gene count, high mitochondrial content)")
+        print("  - Normalize counts (e.g., using sc.pp.normalize_total)")
+        print("  - Log-transform data (e.g., using sc.pp.log1p)")
+        print("  - Store spatial coordinates in .obsm['spatial']")
+        print("  - Identify highly variable genes (e.g., using sc.pp.highly_variable_genes)")
+        print("  - Filter out mitochondria-encoded genes if needed")
+        print("  - batch corrections if needed")
+        print("")
+        print("For single-cell/nucleus reference data:")
+        print("  - Filter low-quality cells (low gene count, high mitochondrial content)")
+        print("  - Normalize counts (e.g., using sc.pp.normalize_total)")
+        print("  - Log-transform data (e.g., using sc.pp.log1p)")
+        print("  - Annotate cell types in .obs['celltype']")
+        print("  - Identify highly variable genes (e.g., using sc.pp.highly_variable_genes)")
+        print("  - Consider using cell2location's filter_genes() to select informative genes")
+        print("    that separate cell types in your reference data")
+        print("  - batch corrections if needed")
+        print("="*80)
+        print("")
+        print("IMPORTANT DATA STRUCTURE REQUIREMENTS:")
+        print("="*80)
+        print("The AnnData objects must have specific structures:")
+        print("  - Spatial transcriptomics data: Must have spatial coordinates in .obsm['spatial'] and .obs['annotation'] if ST has manual annotation reference")
+        print("  - Single-cell/nucleus reference data: Must have cell type annotations in .obs['celltype']")
+        print("="*80)
+
         
     def run(self):
        
