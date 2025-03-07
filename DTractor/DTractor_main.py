@@ -362,8 +362,6 @@ class DTractor_pipeline:
         # Estimate iterations
         est_iter, start_range, end_range = estimate_iterations(adata_vis_copy, adata_ref_copy)  
 
-        train_loss_st_torch = []
-
         # Set up tensors for deconvolution
         st, st_emb, spot_celltype, celltype_gene_matrix_torch = setup_deconvolution(adata_vis_copy, adata_ref_copy)
 
