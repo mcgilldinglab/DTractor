@@ -2,6 +2,7 @@ import numpy as np
 import scvi
 import torch
 import random
+import matplotlib.pyplot as plt
 
 def set_seed(seed):
     random.seed(seed)
