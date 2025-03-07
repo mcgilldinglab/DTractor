@@ -1,12 +1,4 @@
-# import pandas as pd 
-# import scanpy as sc
 import numpy as np
-# import torch
-# import random
-# import scvi
-# import statsmodels.api as sm
-# import torch.optim as optim
-# import torch.nn.functional as F
 import math
 from .DTractor_spatial import *
 from .data_import import *
