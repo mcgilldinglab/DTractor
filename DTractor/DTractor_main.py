@@ -330,10 +330,7 @@ def run_scvi_analysis(adata_ref, adata_vis, seed=42):
 
 
 class DTractor_pipeline:
-    def __init__(self,spatial_data_path,reference_data_path):
-        self.spatial_data_path = spatial_data_path
-        self.reference_data_path = reference_data_path
-
+    def __init__(self):
         # Note to users about preprocessing requirements
         print("\n" + "="*80)
         print("IMPORTANT PREPROCESSING REQUIREMENTS:")
@@ -367,7 +364,10 @@ class DTractor_pipeline:
         print("  - Single-cell/nucleus reference data: Must have cell type annotations in .obs['celltype']")
         print("="*80)
 
-    def data_import(self):
+    def data_import(self, spatial_data_path, reference_data_path):
+        self.spatial_data_path = spatial_data_path
+        self.reference_data_path = reference_data_path
+        
         # Read and validate the dataset
         # adata_vis = validate_spatial_data(sc.read_h5ad("spatial_example.h5ad"))
         adata_vis = validate_spatial_data(sc.read_h5ad(self.spatial_data_path))
