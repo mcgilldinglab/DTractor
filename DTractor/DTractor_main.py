@@ -380,6 +380,7 @@ class DTractor_pipeline:
         common_genes = np.intersect1d(adata_ref.var.index, adata_vis.var.index)
         print(f"Found {common_genes.shape[0]} common genes between reference and visium datasets")
         print("These common genes will be used for downstream analysis")
+        return adata_vis, adata_ref
         
     def run(self):
         adata_ref_copy, adata_vis_copy = run_scvi_analysis(adata_ref, adata_vis)
