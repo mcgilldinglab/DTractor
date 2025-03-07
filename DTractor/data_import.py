@@ -1,3 +1,6 @@
+import scanpy as sc
+import numpy as np
+
 def validate_spatial_data(adata_vis):
     """
     Validate spatial transcriptomics data in AnnData format.
