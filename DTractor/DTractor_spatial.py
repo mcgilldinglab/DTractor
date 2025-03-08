@@ -334,6 +334,7 @@ def custom_loss(A, B, C, D, iteration, similarity_weight, celltype_distance_weig
 
 train_loss_st_torch = []
 def adam_st_torch(st, st_emb, spot_celltype, celltype_gene, 
+                distance_sc,
                 regularization_option=1, 
                 iteration_option=3, 
                 user_defined_iterations=None, 
@@ -508,9 +509,10 @@ def setup_deconvolution(adata_vis_copy, adata_ref_copy):
 
 
 def run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch, 
+                    distance_sc,
                     regularization_option=1, iteration_option=3, 
                     user_defined_iterations=250000, similarity_weight=0.1, 
-                    celltype_distance_weight=0.1, seed=42):
+                    celltype_distance_weight=0.1, seed=42, distance):
     """
     Run deconvolution using adam_st_torch and process results.
     
@@ -542,6 +544,7 @@ def run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
     """
     # Run deconvolution
     st_approx_adam_torch, bestiteration = adam_st_torch(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
+                                                    distance_sc=distance_sc,
                                                     regularization_option=regularization_option,
                                                     iteration_option=iteration_option,
                                                     user_defined_iterations=user_defined_iterations,
