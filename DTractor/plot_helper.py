@@ -60,6 +60,8 @@ def plot_spatial_celltype_predictions(spot_celltype, adata_vis_copy, st_approx_a
     plt.legend(loc='upper right', bbox_to_anchor=(1.7, 1), fontsize=13, markerscale=1.4)
     plt.grid(False)
 
+    return spot_celltype
+
 def plot_pc1_spatial(spot_celltype, st_approx_adam_torch):
     """
     Plot first principal component of cell type composition in spatial coordinates.
