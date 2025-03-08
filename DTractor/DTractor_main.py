@@ -4,6 +4,7 @@ from .DTractor_spatial import *
 from .data_import import *
 from .VAE import *
 from .plot_helper import *
+from .proportion import *
 
 class DTractor_pipeline:
     def __init__(self):
@@ -127,7 +128,6 @@ class DTractor_pipeline:
                                                             similarity_weight=similarity_weight,
                                                             celltype_distance_weight=celltype_distance_weight, 
                                                             seed=seed)
-        return self.spot_celltype
         
     def plotting(self):
         # Run the visualization functions
@@ -136,9 +136,11 @@ class DTractor_pipeline:
             return
             
         # Run the visualization functions
-        plot_spatial_celltype_predictions(self.spot_celltype, self.adata_vis_copy, self.st_approx_adam_torch, self.adata_ref_copy)
+        self.spot_celltype = plot_spatial_celltype_predictions(self.spot_celltype, self.adata_vis_copy, self.st_approx_adam_torch, self.adata_ref_copy)
         plot_pc1_spatial(self.spot_celltype, self.st_approx_adam_torch)
         plot_celltype_correlation(self.st_approx_adam_torch, self.adata_ref_copy)
 
-
+    def prop_matrix(self):
+        self.spot_celltype = proportion(self.spot_celltype, self.adata_ref_copy)
+        return self.spot_celltype
     
