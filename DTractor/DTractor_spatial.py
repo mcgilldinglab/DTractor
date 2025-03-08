@@ -10,6 +10,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 import statsmodels.api as sm
 import scanpy as sc
+from .DTractor_main import *
 
 # Setting a fixed seed ensures reproducibility of results
 # This is important for scientific work and debugging
