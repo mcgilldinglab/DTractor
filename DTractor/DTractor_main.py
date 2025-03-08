@@ -122,6 +122,7 @@ class DTractor_pipeline:
                                                             est_iter=est_iter,
                                                             start_range=start_range,
                                                             end_range=end_range,
+                                                            adata_vis=self.adata_vis_copy,
                                                             regularization_option=regularization_option,
                                                             iteration_option=iteration_option,
                                                             user_defined_iterations=user_defined_iterations,
