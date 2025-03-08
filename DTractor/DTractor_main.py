@@ -106,7 +106,7 @@ class DTractor_pipeline:
         neighbors = find_spatial_neighbors(self.adata_vis_copy, k=k)
          # Print message if regularization_option is not 1
         if regularization_option != 1:
-            print(f"spatial regularization 2 neighbors assumption = {k}")
+            print(f"\nspatial regularization 2 neighbors assumption = {k}\n")
             
         # Estimate iterations
         est_iter, start_range, end_range = estimate_iterations(self.adata_vis_copy, self.adata_ref_copy)  
