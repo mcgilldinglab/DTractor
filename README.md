@@ -4,7 +4,6 @@ A model for cell type deconvolution of spatial transcriptomics with deep neural 
 ## Table of Contents
 - [Overview](#Overview)
 - [Installation](#Installation)
-- [Usage](#Usage)
 - [Tutorials](#Tutorials)
 - [Credits](#Credits)
 - [Contacts](#Contacts)
@@ -58,31 +57,33 @@ import DTractor
 ```
 
 
-
-## Usage
-
+## Tutorials
+### Running DTractor on pdac dataset and visualization of results
 Import the package and use the functions as shown in the example notebooks. 
 Data can be downloaded from [Google Drive](https://drive.google.com/file/d/1REJuo0juOS85F6VNS7rw4nt8BttZ3Xm0/view?usp=sharing)
 
-Use the all in one `DTractor_main`. Please read our [Examples](example/pdac_run.ipynb) for details. 
+Use the all in one `DTractor_main`. Please read our [Example](tutorial/tutorial.ipynb) for details. 
 ```python
-from DTractor import DTractor_main
+dtractor = DTractor_main.DTractor_pipeline() 
 
-# Define Reference single-cell dataset
 adata_ref = "adata_ref_13402.h5ad"
-adata_vis = "adata_vis_13402.h5ad"
+adata_spa = "adata_vis_13402.h5ad"
 
-dtractor = DTractor_main(adata_vis, adata_ref) #set up parameters
-dtractor.run() #train model and visualize
+dtractor.data_import(adata_spa, adata_ref)
+
+dtractor.vae_train()
+
+dtractor.run()
+
+dtractor.plotting()
+
+dtractor.prop_matrix()
 ```
-
-## Tutorials
-### Running DTractor on pdac dataset and visualization of results
-[Tutorial](tutorial/tutorial.ipynb)
 
 
 ## Credits
 DTractor is jointly developed by [Jin Kweon](https://github.com/yjkweon24), [Chenyu Liu](https://github.com/theguardsgod), [Gregory Fonseca](https://www.mcgill.ca/expmed/dr-gregory-fonseca-0), and [Jun Ding](https://github.com/phoenixding) from McGill University.
+
 
 ## Contacts
 Please don't hesitate to contact us if you have any questions and we will be happy to help:
