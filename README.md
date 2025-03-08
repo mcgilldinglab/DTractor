@@ -78,7 +78,7 @@ dtractor.run() #train model and visualize
 
 ## Tutorials
 ### Running DTractor on pdac dataset and visualization of results
-[pdac_run.ipynb](example/pdac_run.ipynb)
+[Tutorial](tutorial/tutorial.ipynb)
 
 
 ## Credits
