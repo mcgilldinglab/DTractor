@@ -242,7 +242,7 @@ def set_optimization_options(regularization_option=1, iteration_option=3, user_d
         'celltype_distance_weight': celltype_distance_weight
     }
 
-def custom_loss(A, B, C, D, iteration, similarity_weight, celltype_distance_weight, regularization_option, ranks_sc=None):
+def custom_loss(A, B, C, D, iteration, similarity_weight, celltype_distance_weight, regularization_option, ranks_sc=None, neighbors=None):
     """
     Custom loss function for deconvolution optimization.
     
@@ -335,6 +335,7 @@ def custom_loss(A, B, C, D, iteration, similarity_weight, celltype_distance_weig
 train_loss_st_torch = []
 def adam_st_torch(st, st_emb, spot_celltype, celltype_gene, 
                 distance_sc,
+                neighbors,
                 regularization_option=1, 
                 iteration_option=3, 
                 user_defined_iterations=None, 
@@ -441,7 +442,7 @@ def adam_st_torch(st, st_emb, spot_celltype, celltype_gene,
     for iteration in range(num_iterations):
         # Compute the loss
         loss, BC, celltypedistloss, similarityloss, froloss = custom_loss(st, st_emb, spot_celltype, celltype_gene, iteration, 
-                                                                        similarity_weight, celltype_distance_weight, regularization_option, ranks_sc)
+                                                                        similarity_weight, celltype_distance_weight, regularization_option, ranks_sc, neighbors=neighbors)
             
         # Perform backpropagation
         optimizer.zero_grad()
@@ -510,6 +511,7 @@ def setup_deconvolution(adata_vis_copy, adata_ref_copy):
 
 def run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch, 
                     distance_sc,
+                    neighbors,
                     regularization_option=1, iteration_option=3, 
                     user_defined_iterations=250000, similarity_weight=0.1, 
                     celltype_distance_weight=0.1, seed=42):
@@ -545,6 +547,7 @@ def run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
     # Run deconvolution
     st_approx_adam_torch, bestiteration = adam_st_torch(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
                                                     distance_sc=distance_sc,
+                                                    neighbors=neighbors,
                                                     regularization_option=regularization_option,
                                                     iteration_option=iteration_option,
                                                     user_defined_iterations=user_defined_iterations,
