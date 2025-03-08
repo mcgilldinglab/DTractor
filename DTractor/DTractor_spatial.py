@@ -347,7 +347,8 @@ def adam_st_torch(st, st_emb, spot_celltype, celltype_gene,
                 user_defined_iterations=None, 
                 similarity_weight=0.0, 
                 celltype_distance_weight=0.0, 
-                seed=42):
+                seed=42,
+                train_loss_st_torch=[]):
     """
     Perform deconvolution using Adam optimizer with customizable optimization options.
     
@@ -381,14 +382,15 @@ def adam_st_torch(st, st_emb, spot_celltype, celltype_gene,
         Weight for similarity loss
     celltype_distance_weight : float
         Weight for celltype distance loss
+    seed:
+        seed
+    train_loss_st_torch: list
+        for loss plot
     
     Returns:
     --------
     tuple: (st_approx_adam_torch, best_iteration)
-    """
-    #for loss plot                
-    train_loss_st_torch = [] 
-                    
+    """            
     set_seed(seed)
                     
     # Check if CUDA is available
@@ -492,7 +494,7 @@ def adam_st_torch(st, st_emb, spot_celltype, celltype_gene,
     # Print the best R2 score and its corresponding iteration only for iteration_option 2
     if iteration_option == 2:
         print(f"Best R2 Score: {best_r2}, achieved at iteration {best_iteration}")
-    return st_approx_adam_torch, best_iteration
+    return st_approx_adam_torch, train_loss_st_torch
 
 def setup_deconvolution(adata_vis_copy, adata_ref_copy):
     """
@@ -575,8 +577,11 @@ def run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
     tuple
         (spot_celltype AnnData object, st_approx_adam_torch array)
     """
+    #for loss plot                
+    train_loss_st_torch = [] 
+                        
     # Run deconvolution
-    st_approx_adam_torch, bestiteration = adam_st_torch(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
+    st_approx_adam_torch, train_loss_st_torch = adam_st_torch(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
                                                     distance_sc=distance_sc,
                                                     neighbors=neighbors,
                                                     est_iter=est_iter,
@@ -588,7 +593,8 @@ def run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
                                                     user_defined_iterations=user_defined_iterations,
                                                     similarity_weight=similarity_weight,
                                                     celltype_distance_weight=celltype_distance_weight,
-                                                    seed=seed)
+                                                    seed=seed,
+                                                    train_loss_st_torch=train_loss_st_torch)
     st_approx_adam_torch = st_approx_adam_torch.detach().cpu().numpy()
 
     torch.cuda.empty_cache()
