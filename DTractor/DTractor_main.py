@@ -116,11 +116,13 @@ class DTractor_pipeline:
 
         # Run the deconvolution function
         self.spot_celltype, self.st_approx_adam_torch = run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
+                                                            distance_sc=distance_sc,
                                                             regularization_option=regularization_option,
                                                             iteration_option=iteration_option,
                                                             user_defined_iterations=user_defined_iterations,
                                                             similarity_weight=similarity_weight,
-                                                            celltype_distance_weight=celltype_distance_weight, seed=seed)
+                                                            celltype_distance_weight=celltype_distance_weight, 
+                                                            seed=seed)
         
     def plotting(self):
         # Run the visualization functions
