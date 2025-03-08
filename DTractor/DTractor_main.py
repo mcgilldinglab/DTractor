@@ -124,6 +124,7 @@ class DTractor_pipeline:
                                                             similarity_weight=similarity_weight,
                                                             celltype_distance_weight=celltype_distance_weight, 
                                                             seed=seed)
+        return self.spot_celltype
         
     def plotting(self):
         # Run the visualization functions
