@@ -142,7 +142,7 @@ def estimate_iterations(adata_vis_copy, adata_ref_copy):
 
 
 
-def compute_r2(st_approx_adam_torch):
+def compute_r2(st_approx_adam_torch, adata_vis):
     """
     Compute R2 score to validate deconvolution results.
     
@@ -339,6 +339,7 @@ def adam_st_torch(st, st_emb, spot_celltype, celltype_gene,
                 est_iter,
                 start_range,
                 end_range,
+                adata_vis,
                 regularization_option=1, 
                 iteration_option=3, 
                 user_defined_iterations=None, 
@@ -469,7 +470,7 @@ def adam_st_torch(st, st_emb, spot_celltype, celltype_gene,
                 print(f"Iteration [{iteration + 1}/{num_iterations}], Entire Loss: {loss.item()}, Original: {froloss.item()}, Regularization 1: {similarityloss.item()}, Regularization 2: {celltypedistloss.item()}")
                 
                 # Compute R2 and update best model if improved
-                r2 = compute_r2(BC.detach().cpu().numpy())
+                r2 = compute_r2(BC.detach().cpu().numpy(), adata_vis)
                 if r2 > best_r2:
                     best_r2 = r2
                     best_iteration = iteration + 1
@@ -518,6 +519,7 @@ def run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
                     est_iter,
                     start_range,
                     end_range,
+                    adata_vis,
                     regularization_option=1, iteration_option=3, 
                     user_defined_iterations=250000, similarity_weight=0.1, 
                     celltype_distance_weight=0.1, seed=42):
@@ -557,6 +559,7 @@ def run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
                                                     est_iter=est_iter,
                                                     start_range=start_range,
                                                     end_range=end_range,
+                                                    adata_vis=adata_vis,
                                                     regularization_option=regularization_option,
                                                     iteration_option=iteration_option,
                                                     user_defined_iterations=user_defined_iterations,
