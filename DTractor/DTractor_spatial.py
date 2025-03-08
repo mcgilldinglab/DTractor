@@ -150,6 +150,7 @@ def compute_r2(st_approx_adam_torch, adata_vis):
     -----------
     st_approx_adam_torch : torch.Tensor
         Deconvolved spot-cell type matrix.
+    adata_vis: adata_vis anndata object to extract .obs['annotation']
         
     Returns:
     --------
@@ -266,6 +267,8 @@ def custom_loss(A, B, C, D, iteration, similarity_weight, celltype_distance_weig
         Regularization option (1, 2, or 3).
     ranks_sc : torch.Tensor
         Cell type distance ranks.
+    neighbors: int
+        regularization 2 KNN K value.
         
     Returns:
     --------
@@ -332,7 +335,6 @@ def custom_loss(A, B, C, D, iteration, similarity_weight, celltype_distance_weig
     loss = (similarity_weight * similarity_loss) + (celltype_distance_weight * celltype_distance_loss) + fro_loss
     return loss, BC, celltype_distance_weight * celltype_distance_loss, similarity_weight * similarity_loss, fro_loss
 
-train_loss_st_torch = []
 def adam_st_torch(st, st_emb, spot_celltype, celltype_gene, 
                 distance_sc,
                 neighbors,
@@ -359,6 +361,12 @@ def adam_st_torch(st, st_emb, spot_celltype, celltype_gene,
         Spot-celltype matrix (to be optimized)
     celltype_gene : torch.Tensor
         Celltype-gene matrix
+    distance_sc: reference dataset distance matrix
+    neighbors: regularization2 KNN K
+    est_iter: iteration_option 1 estimated iteration
+    start_range: iteration_option 2 range-based iteration start point
+    end_range: iteration_option 2 range-based iteration end point
+    adata_vis: spatial dataset update
     regularization_option : int (1, 2, or 3)
         Option 1: Fastest (just Frobenius norm, no regularization)
         Option 2: Simple regularization with argsort (faster)
@@ -378,6 +386,9 @@ def adam_st_torch(st, st_emb, spot_celltype, celltype_gene,
     --------
     tuple: (st_approx_adam_torch, best_iteration)
     """
+    #for loss plot                
+    train_loss_st_torch = [] 
+                    
     set_seed(seed)
                     
     # Check if CUDA is available
@@ -536,6 +547,18 @@ def run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
         Initial spot-celltype tensor
     celltype_gene_matrix_torch : torch.Tensor
         Celltype-gene matrix tensor
+    distance_sc: 
+        reference dataset distance matrix
+    neighbors: int
+        regularization2 KNN K
+    est_iter: 
+        iteration_option 1 estimated iteration
+    start_range: 
+        iteration_option 2 range-based iteration start point
+    end_range: 
+        iteration_option 2 range-based iteration end point
+    adata_vis: 
+        spatial dataset update
     regularization_option : int, optional
         Regularization option (1-3), by default 1
     iteration_option : int, optional 
