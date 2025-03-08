@@ -512,7 +512,7 @@ def run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
                     distance_sc,
                     regularization_option=1, iteration_option=3, 
                     user_defined_iterations=250000, similarity_weight=0.1, 
-                    celltype_distance_weight=0.1, seed=42, distance):
+                    celltype_distance_weight=0.1, seed=42):
     """
     Run deconvolution using adam_st_torch and process results.
     
