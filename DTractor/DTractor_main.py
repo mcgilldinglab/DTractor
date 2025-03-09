@@ -83,6 +83,8 @@ class DTractor_pipeline:
             
         self.adata_ref_copy, self.adata_vis_copy = run_scvi_analysis(self.adata_ref, self.adata_vis, seed)
 
+        return self.adata_ref_copy, self.adata_vis_copy   
+
     def print_instructions(self):
         # Print instructions for adam_st_torch parameters
         print("\n\nadam_st_torch function parameters:")
@@ -96,24 +98,27 @@ class DTractor_pipeline:
         print("  similarity_weight:     Weight for similarity loss (should be 0 for regularization_option=1)")
         print("  celltype_distance_weight: Weight for celltype distance loss (should be 0 for regularization_option=1)\n\n")
         
-    def run(self, seed=42, k=5, regularization_option=1, iteration_option=3, user_defined_iterations=10000, similarity_weight=0.1, celltype_distance_weight=0.1):
+    def run(self, seed=42, k=5, regularization_option=1, iteration_option=3, user_defined_iterations=10000, similarity_weight=0.1, celltype_distance_weight=0.1, dtractor_only_ref=None, dtractor_only_vis=None):
         # Clear GPU memory
         torch.cuda.empty_cache()
+
+        self.current_ref_data = dtractor_only_ref if dtractor_only_ref is not None else self.adata_ref_copy
+        self.current_vis_data = dtractor_only_vis if dtractor_only_vis is not None else self.adata_vis_copy
         # Calculate cell type embeddings
-        celltype_emb_mean, distance_sc, celltype_gene_matrix_torch = calculate_celltype_embeddings(self.adata_ref_copy)
+        celltype_emb_mean, distance_sc, celltype_gene_matrix_torch = calculate_celltype_embeddings(self.current_ref_data)
 
         # Find spatial neighbors
         
-        neighbors = find_spatial_neighbors(self.adata_vis_copy, k=k)
+        neighbors = find_spatial_neighbors(self.current_vis_data, k=k)
          # Print message if regularization_option is not 1
         if regularization_option != 1:
             print(f"\nspatial regularization 2 neighbors assumption = {k}\n")
             
         # Estimate iterations
-        est_iter, start_range, end_range = estimate_iterations(self.adata_vis_copy, self.adata_ref_copy)  
+        est_iter, start_range, end_range = estimate_iterations(self.current_vis_data, self.current_ref_data)  
 
         # Set up tensors for deconvolution
-        st, st_emb, spot_celltype, celltype_gene_matrix_torch = setup_deconvolution(self.adata_vis_copy, self.adata_ref_copy)
+        st, st_emb, spot_celltype, celltype_gene_matrix_torch = setup_deconvolution(self.current_vis_data, self.current_ref_data)
 
         # Run the deconvolution function
         self.spot_celltype, self.st_approx_adam_torch = run_deconvolution(st, st_emb, spot_celltype, celltype_gene_matrix_torch,
@@ -122,7 +127,7 @@ class DTractor_pipeline:
                                                             est_iter=est_iter,
                                                             start_range=start_range,
                                                             end_range=end_range,
-                                                            adata_vis=self.adata_vis_copy,
+                                                            adata_vis=self.current_vis_data,
                                                             regularization_option=regularization_option,
                                                             iteration_option=iteration_option,
                                                             user_defined_iterations=user_defined_iterations,
@@ -135,13 +140,18 @@ class DTractor_pipeline:
         if self.spot_celltype is None or self.st_approx_adam_torch is None:
             print("Error: Run the deconvolution first before plotting.")
             return
+
+        ref_data = getattr(self, 'current_ref_data', self.adata_ref_copy)
+        vis_data = getattr(self, 'current_vis_data', self.adata_vis_copy)
             
         # Run the visualization functions
-        self.spot_celltype = plot_spatial_celltype_predictions(self.spot_celltype, self.adata_vis_copy, self.st_approx_adam_torch, self.adata_ref_copy)
+        self.spot_celltype = plot_spatial_celltype_predictions(self.spot_celltype, vis_data, self.st_approx_adam_torch, ref_data)
         plot_pc1_spatial(self.spot_celltype, self.st_approx_adam_torch)
-        plot_celltype_correlation(self.st_approx_adam_torch, self.adata_ref_copy)
+        plot_celltype_correlation(self.st_approx_adam_torch, ref_data)
 
     def prop_matrix(self):
-        self.spot_celltype = proportion(self.spot_celltype, self.adata_ref_copy)
+        ref_data = getattr(self, 'current_ref_data', self.adata_ref_copy)
+        
+        self.spot_celltype = proportion(self.spot_celltype, ref_data)
         return self.spot_celltype
     
