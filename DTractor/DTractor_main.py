@@ -69,6 +69,8 @@ class DTractor_pipeline:
         print(f"\n\nFound {common_genes.shape[0]} common genes between reference and visium datasets")
         print("These common genes will be used for downstream analysis")
 
+        return self.adata_ref, self.adata_vis
+
     def vae_train(self, seed=42):
         """
         Train VAE model with an optional seed for reproducibility.
