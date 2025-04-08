@@ -29,7 +29,7 @@ conda activate dtractor
 
 Then, install the version of PyTorch compatible with your devices by following the [instructions on the official website](https://pytorch.org/get-started/locally/). 
 
-Installing the DOLPHIN Package
+Installing the DTractor Package
 1. Standard Installation
    
   a. download DTractor from this repository, go to the downloaded DTractor package root directory, and use the pip tool to install)
