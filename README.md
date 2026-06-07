@@ -80,12 +80,44 @@ dtractor.plotting()
 dtractor.prop_matrix()
 ```
 
+## Optional Regularization Guidance
+
+DTractor includes two optional regularization terms: the spatial-proximity regularizer controlled by `lambda_1` and the cross-modal consistency regularizer controlled by `lambda_2`. These terms are not required for standard use. By default, DTractor uses:
+
+```text
+lambda_1 = 0
+lambda_2 = 0
+```
+
+This default setting is recommended for routine benchmarking and for datasets where the scRNA-seq reference and spatial transcriptomics data are already well matched after preprocessing. Even when both regularizers are disabled, DTractor is still distinct from standard matrix factorization because it combines ST-VAE-based nonlinear representation learning, neural matrix factorization, and a fixed scRNA-seq-derived cell-type expression reference.
+
+The regularizers are intended as optional refinements for specific scenarios. `lambda_1` can be useful when inferred cell-type proportion maps are locally noisy but the tissue is expected to have spatially coherent structure. `lambda_2` can be useful when there is substantial discrepancy between the scRNA-seq reference and ST data, such as in immune-rich tissues, tumor microenvironments, or datasets with stronger modality mismatch. They should not be enabled automatically, because excessive spatial smoothing may obscure true biological heterogeneity and unnecessary cross-modal regularization may introduce over-correction or additional computational cost.
+
+Based on the sensitivity analyses in the revised manuscript, we recommend the following practical search ranges:
+
+```text
+For well-matched datasets:
+lambda_1 = 0, 1e-4, 5e-4, 1e-3, 5e-3
+lambda_2 = 0, 0.01, 0.05, 0.1
+```
+
+Large values such as `lambda_1 >= 1e-2` or `lambda_2 >= 0.5` should be used cautiously in well-matched datasets, as they may reduce correlation, annotation, or R² performance.
+
+```text
+For challenging datasets with stronger reference-ST discrepancy:
+lambda_1 = 0.05, 0.1, 0.5
+lambda_2 = 10, 20, 50
+```
+
+In the mouse spleen sensitivity analysis, `lambda_1 = 0.5` and `lambda_2 = 50` provided useful starting points. However, the optimal values may vary across datasets. We recommend starting from `lambda_1 = lambda_2 = 0`, then tuning these parameters only when the spatial maps, reconstruction error, correlation metrics, or biological interpretation suggest a clear need for additional regularization.
+
 
 ## Credits
-DTractor is jointly developed by [Jin Kweon](https://github.com/yjkweon24), [Chenyu Liu](https://github.com/theguardsgod), [Gregory Fonseca](https://www.mcgill.ca/expmed/dr-gregory-fonseca-0), and [Jun Ding](https://github.com/phoenixding) from McGill University.
+DTractor is jointly developed by [Jin Kweon](https://github.com/yjkweon24), [Xiuhui Yang](https://github.com/Xiuhui-Yang/), [Chenyu Liu](https://github.com/theguardsgod), [Gregory Fonseca](https://www.mcgill.ca/expmed/dr-gregory-fonseca-0), and [Jun Ding](https://github.com/phoenixding) from McGill University.
 
 
 ## Contacts
 Please don't hesitate to contact us if you have any questions and we will be happy to help:
 * jin.kweon at mail.mcgill.ca 
+* xiuhui.yang at mail.mcgill.ca 
 * jun.ding at mcgill.ca
